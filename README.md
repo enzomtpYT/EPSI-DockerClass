@@ -382,19 +382,3 @@ services:
 Notes:
 - The default user created is `appuser` with UID/GID 1000. You can change the username by passing `APP_USER` at build time if required.
 - The runtime user has no login shell by default (`/bin/false`) — change this only for debug images.
-
-## 🤝 Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Test in both development and production modes
-4. Submit a pull request
-
-## 📄 License
-
-[Your License Here]
-
----
-
-**Author**: [Your Name]  
-**Repository**: EPSI-DockerClass
