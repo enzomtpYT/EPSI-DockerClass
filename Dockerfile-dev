@@ -1,0 +1,36 @@
+###
+# Multi-stage build to produce a smaller runtime image
+###
+
+# --- Builder stage: install deps and compile pyfiles ---
+###
+# Development Dockerfile: installs dependencies but leaves source to be
+# bind-mounted from the host so code changes are visible immediately.
+###
+
+FROM python:3.9-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+	PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# System deps (keep minimal) and upgrade pip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	build-essential \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& pip install --upgrade pip setuptools wheel
+
+# Copy only requirements and install into the image. Source will be bind-mounted during development.
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Create a non-root user for development convenience
+RUN useradd --create-home --shell /bin/bash devuser || true
+USER devuser
+
+# Expose Flask default port
+EXPOSE 5000
+
+# Default command runs the app with reloader enabled. In compose we set FLASK_ENV/FLASK_DEBUG.
+CMD ["python", "-u", "src/index.py"]

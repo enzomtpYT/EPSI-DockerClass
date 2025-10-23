@@ -1,0 +1,22 @@
+# Ignore virtual environments
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Dockerfile and envs
+.env
+.DS_Store
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# System
+*.log
