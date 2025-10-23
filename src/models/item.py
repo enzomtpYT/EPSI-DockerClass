@@ -18,3 +18,10 @@ class Item(peewee.Model):
         database = db
         table_name = 'items'
     
+    def to_dict(self):
+        """Convert the model instance to a dictionary."""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description
+        }

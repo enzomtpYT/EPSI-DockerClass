@@ -36,5 +36,4 @@ RUN python -c "import sys, pkgutil; print('Python', sys.version)"
 # Expose the port the Flask app uses (index.py runs on 5000 by default)
 EXPOSE 5000
 
-# Use unbuffered output for log friendliness
-CMD ["python", "-u", "src/index.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "info", "src.wsgi:app"]
